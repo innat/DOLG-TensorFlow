@@ -12,9 +12,31 @@ TensorFlow 2
 TensorFlow Addons 
 ```
 
-## Data 
+## Code
 
-comming soon. 
+Reset the config file. `config.py`
+
+```python
+BATCH_SIZE  = 10
+IMG_SIZE    = 768
+CHANNELS    = 3
+LR = 0.003
+mixed_precision = False
+```
+
+Build the **DOLG** model with **EfficientNetB5**. 
+
+```python
+from config import IMG_SIZE, CHANNELS
+from model.DOLG import DOLGNet 
+
+print(model(tf.ones((1, IMG_SIZE, IMG_SIZE, CHANNELS)))[0].shape)
+display(tf.keras.utils.plot_model(model.build_graph(), 
+                                  show_shapes=True, 
+                                  show_layer_names=True,
+                                  expand_nested=False))
+```
+
 
 
 ## Code Example:
