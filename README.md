@@ -50,7 +50,7 @@ The **DOLG** concept can be integrated into any computer vision models i.e. `NFN
 
 ## Known Issue
 
-- In the global branch of **DOLG**, the original implementaion uses **Generalized MeanPooling (GeM)**. However, here in our set up, it causes `nan` loss. Instead **Global AveragePooling (GAP)**.
+- In the global branch of **DOLG**, the original implementaion uses **Generalized MeanPooling (GeM)**. However, here in our set up, it causes `nan` loss. Instead **Global AveragePooling (GAP)** is used.
 
 
 ## ToDo
