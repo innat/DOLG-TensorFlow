@@ -53,9 +53,10 @@ The **DOLG** concept can be integrated into any computer vision models i.e. `NFN
 - In the global branch of **DOLG**, the original implementaion uses **Generalized MeanPooling (GeM)**. However, here in our set up, it causes `nan` loss. Instead **Global AveragePooling (GAP)** is used.
 
 
-## ToDo
+## To Do
 - Implement Sub-center Arcface Head.
 - Fix GeM issue. 
+- [tf-keras-vis](https://github.com/keisen/tf-keras-vis) 
 
 ## Citations
 ```python
