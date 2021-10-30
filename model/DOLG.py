@@ -44,7 +44,7 @@ class DOLGNet(tf.keras.Model):
         )
         
         # Head block
-        if Classifier == 1:
+        if Classifier <= 2:
             self.classifier = Sequential([
                 layers.GlobalAveragePooling2D(name='HeadGAP'),
                 layers.Dense(1, activation = 'sigmoid')
