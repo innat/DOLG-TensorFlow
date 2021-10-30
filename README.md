@@ -8,7 +8,7 @@ This is an unofficial implementation of **Deep Orthogonal Fusion of Local and Gl
 ## Prerequisites
 
 ```
-TensorFlow 2
+TensorFlow 2.6 
 TensorFlow Addons 
 ```
 
