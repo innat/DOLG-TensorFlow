@@ -48,11 +48,6 @@ The **DOLG** concept can be integrated into any computer vision models i.e. `NFN
 - [ResNet DOLGNet Cmaterdb](https://github.com/innat/DOLG-TensorFlow/blob/main/Code%20Example/ResNet%20DOLGNet%20Cmaterdb.ipynb) | [Colab](https://colab.research.google.com/drive/1uEV9GsEZnTyWoilVww8d_Jmn3cAcefZr?usp=sharing)
 
 
-## Known Issue
-
-- In the global branch of **DOLG**, the original implementaion uses **Generalized MeanPooling (GeM)**. However, here in our set up, it causes `nan` loss. Instead **Global AveragePooling (GAP)** is used.
-
-
 ## To Do
 - Implement Sub-center Arcface Head.
 - Fix GeM issue. 
