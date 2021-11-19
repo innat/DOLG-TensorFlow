@@ -22,9 +22,12 @@ class GeneralizedMeanPooling2D(layers.Layer):
                                  trainable=True)
         super(GeneralizedMeanPooling2D, self).build(input_shape)
 
-    def call(self, inputs):
-        x = tf.reduce_mean(tf.abs(inputs**self.p), axis=[1,2], keepdims=False) + self.epsilon
-        x = x**(1.0 / self.p)
+   def call(self, inputs):
+        x = tf.abs(tf.maximum(self.epsilon, inputs))
+        x = tf.pow(x, self.p)
+        x = tf.reduce_mean(x, axis=[1,2], keepdims=False) 
+        x = tf.pow(x, (1.0 / self.p))
+
         if self.normalize:
             x = tf.nn.l2_normalize(x, 1)
         return x
