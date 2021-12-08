@@ -50,9 +50,10 @@ The **DOLG** concept can be integrated into any computer vision models i.e. `NFN
 - [ResNet DOLGNet Cmaterdb](https://github.com/innat/DOLG-TensorFlow/blob/main/Code%20Example/ResNet%20DOLGNet%20Cmaterdb.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1uEV9GsEZnTyWoilVww8d_Jmn3cAcefZr?usp=sharing)
 
 ## To Do
-- Implement Sub-center Arcface Head.
-- <s>Fix GeM issue. </s> 
-- [tf-keras-vis](https://github.com/keisen/tf-keras-vis) 
+
+- [x] Fix GeM issue. 
+- [ ] Implement Sub-center Arcface Head.
+- [ ] [tf-keras-vis](https://github.com/keisen/tf-keras-vis) 
 
 ## Citations
 ```python
