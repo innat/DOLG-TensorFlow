@@ -24,13 +24,13 @@ LR = 0.003
 mixed_precision = False
 ```
 
-Next, build the **DOLG** model with **EfficientNetB5**. 
+Next, build the **DOLG** model with **EfficientNetB5**. By default, EfficientNet will be used to build up the DOLGNet. 
 
 ```python
 from config import IMG_SIZE, CHANNELS
 from model.DOLG import DOLGNet 
 
-model = DOLGNet ...
+model = DOLGNet(Classifier=NUM_CLASSES)
 
 print(model(tf.ones((1, IMG_SIZE, IMG_SIZE, CHANNELS)))[0].shape)
 display(tf.keras.utils.plot_model(model.build_graph(), 
