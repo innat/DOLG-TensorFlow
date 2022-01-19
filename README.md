@@ -1,47 +1,76 @@
+
+![3-Figure2-1](https://user-images.githubusercontent.com/17668390/150056333-bb5af4fa-33f4-42df-9dc7-fbebbcbef862.png) ![4-Figure3-1](https://user-images.githubusercontent.com/17668390/150056354-6f23afae-4c01-434a-b3e9-96099b61924e.png)
+
 # DOLG-TensorFlow
 
-This is an unofficial implementation of **Deep Orthogonal Fusion of Local and Global Features (DOLG)** in `TensorFlow 2 (Keras)`. [Paper](https://arxiv.org/pdf/2108.02927.pdf). In this repository, the following architechture has been implemented. Details [here](https://mp.weixin.qq.com/s/7B3hZUpLtTt8NcGt0c-77w).
-
-![image](https://user-images.githubusercontent.com/17668390/138777383-b1d475d7-c842-4577-8554-30cf2013cadc.png)
-
+This is an unofficial implementation of **Deep Orthogonal Fusion of Local and Global Features (DOLG)** in `TensorFlow 2 (Keras)`. [Paper](https://arxiv.org/pdf/2108.02927.pdf). 
 
 ## Prerequisites
 
-```
-TensorFlow 2.6 
-TensorFlow Addons 
+Check [requirements.txt](https://github.com/innat/DOLG-TensorFlow/blob/main/requirements.txt)
+
+## Run (Option 1)
+
+First, clone it. 
+
+```bash
+git clone https://github.com/innat/DOLG-TensorFlow.git
 ```
 
-## Run
-
-First, reset the config file, `config.py`
+Second, create two output branch, one for **local** and other for **global branch**. See the demo below.
 
 ```python
-BATCH_SIZE  = 10
-IMG_SIZE    = 768
-CHANNELS    = 3
-LR = 0.003
-mixed_precision = False
+img_size   = 128
+num_classe = 10
+
+base = applications.EfficientNetB0(...)
+new_base = keras.Model(
+    [base.inputs], 
+    [
+        base.get_layer('block5c_add').output,       # fol local branch 
+        base.get_layer('block7a_project_bn').output # for global branch 
+    ]
+)
 ```
 
-Next, build the **DOLG** model with **EfficientNetB5**. By default, EfficientNet will be used to build up the DOLGNet. 
+third, pass the new base model to the main model as follows.
 
 ```python
-from config import IMG_SIZE, CHANNELS
-from model.DOLG import DOLGNet 
+from models.DOLG import DOLGNet
 
-model = DOLGNet(Classifier=NUM_CLASSES)
-
-print(model(tf.ones((1, IMG_SIZE, IMG_SIZE, CHANNELS)))[0].shape)
-display(tf.keras.utils.plot_model(model.build_graph(), 
-                                  show_shapes=True, 
-                                  show_layer_names=True,
-                                  expand_nested=False))
+dolg_net = DOLGNet(new_base, num_classes=num_classe, activation='softmax')
+dolg_net.build_graph().summary()
 ```
 
-For better flexibility, please see the following code example section.
+## Run (Option 2)
 
-## Code Example
+Apart from the `keras.applications`, we can also integrate dolg model with our custom layers. Here is one example, 
+
+```python
+
+# general 
+from layers.GeM import GeneralizedMeanPooling2D
+# special for dolgnet 
+from layers.LocalBranch import DOLGLocalBranch
+from layers.OrtholFusion import OrthogonalFusion
+
+vision_input = keras.Input(shape=(img_shape, img_shape, 1), name="img")
+x = keras.layers.Conv2D(16, 3, activation="relu")(vision_input)
+x = Conv2D ...
+y = x = DOLGLocalBranch(IMG_SIZE=img_shape)(x)
+
+x = keras.layers.MaxPooling2D(3)(x)
+x = keras.layers.Conv2D ...
+gem_pool = GeneralizedMeanPooling2D()(x)
+gem_dens = keras.layers.Dense(1024, activation=None)(gem_pool)
+
+vision_output = OrthogonalFusion()([y, gem_dens])
+vision = keras.Model(vision_input, vision_output, name="vision")
+vision.summary(expand_nested=True, line_length=110)
+```
+
+
+## Code Examples
 
 The **DOLG** concept can be integrated into any computer vision models i.e. `NFNet`, `ResNeSt`, or `EfficietNet`. [Here](https://github.com/innat/DOLG-TensorFlow/tree/main/Code%20Example) are some end-to-end code examples.
 
@@ -50,21 +79,11 @@ The **DOLG** concept can be integrated into any computer vision models i.e. `NFN
 - [ResNet DOLGNet Cmaterdb](https://github.com/innat/DOLG-TensorFlow/blob/main/Code%20Example/ResNet%20DOLGNet%20Cmaterdb.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1uEV9GsEZnTyWoilVww8d_Jmn3cAcefZr?usp=sharing)
 
 ## To Do
-
 - [x] Fix GeM issue. 
 - [ ] Implement Sub-center Arcface Head.
-- [ ] [tf-keras-vis](https://github.com/keisen/tf-keras-vis) 
 
-## Citations
-```python
-@misc{yang2021dolg,
-      title={DOLG: Single-Stage Image Retrieval with Deep Orthogonal 
-                                         Fusion of Local and Global Features}, 
-      author={Min Yang and Dongliang He and Miao Fan and Baorong Shi and 
-                                        Xuetong Xue and Fu Li and Errui Ding and Jizhou Huang},
-      year={2021},
-      eprint={2108.02927},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV}
-}
-```
+
+## References and Other Implementation 
+- [Blogs](https://mp.weixin.qq.com/s/7B3hZUpLtTt8NcGt0c-77w).
+- [Official-Code](https://github.com/feymanpriv/DOLG-paddle)
+- [PyTorch-Code](https://github.com/dongkyuk/DOLG-pytorch).
