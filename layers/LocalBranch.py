@@ -3,12 +3,12 @@
 Created on Tue Oct 26 02:33:39 2021
 @author: innat
 """
-import config 
 import tensorflow as tf 
-from tensorflow.keras import (layers, Sequential, activations, initializers)
+from tensorflow import keras 
+from tensorflow.keras import layers 
 
 # Multi-Atrous Branch
-class MultiAtrous(tf.keras.Model):
+class MultiAtrous(keras.Model):
     def __init__(self, dilation_rates=[6, 12, 18], upsampling=1, 
                  kernel_size=3, padding="same",  **kwargs):
         super(MultiAtrous, self).__init__(name='MultiAtrous', **kwargs)
@@ -27,7 +27,7 @@ class MultiAtrous(tf.keras.Model):
                              ]
         
         # Global Average Pooling Branch 
-        self.gap_branch = Sequential(
+        self.gap_branch = keras.Sequential(
             [
                 layers.GlobalAveragePooling2D(keepdims=True),
                 layers.Conv2D(int(1024 / 2), kernel_size=1),
@@ -58,10 +58,10 @@ class MultiAtrous(tf.keras.Model):
     
     
 # DOLG: Local-Branch
-class DOLGLocalBranch(tf.keras.Model):
-    def __init__(self, **kwargs):
+class DOLGLocalBranch(keras.Model):
+    def __init__(self, IMG_SIZE, **kwargs):
         super(DOLGLocalBranch, self).__init__(name='LocalBranch', **kwargs)
-        self.multi_atrous = MultiAtrous(padding='same', upsampling=int(config.IMG_SIZE/32))
+        self.multi_atrous = MultiAtrous(padding='same', upsampling=int(IMG_SIZE/32))
         self.conv1 = layers.Conv2D(1024, kernel_size=1)
         self.conv2 = layers.Conv2D(1024, kernel_size=1, use_bias=False)
         self.conv3 = layers.Conv2D(1024, kernel_size=1)
@@ -83,7 +83,7 @@ class DOLGLocalBranch(tf.keras.Model):
         # softplus activations
         attn_map = tf.nn.relu(local_feat)
         attn_map = self.conv3(attn_map)
-        attn_map = activations.softplus(attn_map) 
+        attn_map = keras.activations.softplus(attn_map) 
 
         # Output of the Local-Branch 
         return  norm_local_feat * attn_map 
