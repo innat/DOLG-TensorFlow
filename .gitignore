@@ -127,3 +127,10 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Pycharm
+.idea/
+
+# TF/Keras weight files
+*.h5
+weights/original_weights/efficientnet-lite*
