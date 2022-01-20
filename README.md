@@ -5,6 +5,8 @@
 
 This is an unofficial implementation of **Deep Orthogonal Fusion of Local and Global Features (DOLG)** in `TensorFlow 2 (Keras)`. [Paper](https://arxiv.org/pdf/2108.02927.pdf). 
 
+It seeks to design an effective single-stage solution by integrating local and global information inside images into compact image representations. It attentively extracts representative local information with multi-atrous convolutions and self-attention at first. Components orthogonal to the global image representation are then extracted from the local information. At last, the orthogonal components are concatenated with the global representation as a complementary, and then aggregation is performed to generate the final representation.
+
 ## Prerequisites
 
 Check [requirements.txt](https://github.com/innat/DOLG-TensorFlow/blob/main/requirements.txt)
@@ -55,14 +57,14 @@ from layers.LocalBranch import DOLGLocalBranch
 from layers.OrtholFusion import OrthogonalFusion
 
 vision_input = keras.Input(shape=(img_shape, img_shape, 1), name="img")
-x = keras.layers.Conv2D(16, 3, activation="relu")(vision_input)
+x = Conv2D(...)(vision_input)
 x = Conv2D ...
 y = x = DOLGLocalBranch(IMG_SIZE=img_shape)(x)
 
-x = keras.layers.MaxPooling2D(3)(x)
-x = keras.layers.Conv2D ...
+x = MaxPooling2D(...)(x)
+x = Conv2D ...
 gem_pool = GeneralizedMeanPooling2D()(x)
-gem_dens = keras.layers.Dense(1024, activation=None)(gem_pool)
+gem_dens = Dense(1024, activation=None)(gem_pool)
 
 vision_output = OrthogonalFusion()([y, gem_dens])
 vision = keras.Model(vision_input, vision_output, name="vision")
