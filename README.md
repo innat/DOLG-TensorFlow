@@ -9,7 +9,7 @@ It seeks to design an effective single-stage solution by integrating local and g
 
 **Prerequisites**: Check [requirements.txt](https://github.com/innat/DOLG-TensorFlow/blob/main/requirements.txt)
 
-## Install
+## Install and Usage
 
 [Option 1 / 3]: 
 
