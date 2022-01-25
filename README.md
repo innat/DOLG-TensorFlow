@@ -11,13 +11,13 @@ It seeks to design an effective single-stage solution by integrating local and g
 
 ## Install
 
-1. [Option 1 / 3]: 
+[Option 1 / 3]: 
 
 ```bash 
 pip install dolg-tensorflow
 ```
 
-2. [Option 2 / 3]
+[Option 2 / 3]
 
 **First**, clone this repo. 
 
@@ -50,7 +50,7 @@ dolg_net = DOLGNet(new_base, num_classes=num_classe, activation='softmax')
 dolg_net.build_graph().summary()
 ```
 
-3. [Option 3 / 3]
+[Option 3 / 3]
 
 Apart from the `keras.applications`, we can also integrate dolg model with our custom layers. Here is one example, 
 
@@ -82,10 +82,6 @@ The **DOLG** concept can be integrated into any computer vision models i.e. `NFN
 - [DenseNet DOLGNet Malaria](https://github.com/innat/DOLG-TensorFlow/blob/main/Code%20Example/DenseNet%20DOLGNet%20Malaria.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1VI7qZQZX_sWZZM8eKN98gCbiY3Ju1NpY?usp=sharing)
 - [EfficientNet DOLGNet Oxford Flowers 102](https://github.com/innat/DOLG-TensorFlow/blob/main/Code%20Example/EfficientNet%20DOLGNet%20Oxford%20Flowers%20102.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1WvxR6gh0SzqcYUnSNnVQRw9UiFzgFMgm?usp=sharing)
 - [ResNet DOLGNet Cmaterdb](https://github.com/innat/DOLG-TensorFlow/blob/main/Code%20Example/ResNet%20DOLGNet%20Cmaterdb.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1uEV9GsEZnTyWoilVww8d_Jmn3cAcefZr?usp=sharing)
-
-## To Do
-- [x] Fix GeM issue. 
-- [ ] Implement Sub-center Arcface Head.
 
 
 ## References and Other Implementation 
