@@ -7,24 +7,22 @@ This is an unofficial implementation of **Deep Orthogonal Fusion of Local and Gl
 
 It seeks to design an effective single-stage solution by integrating local and global information inside images into compact image representations. It attentively extracts representative local information with multi-atrous convolutions and self-attention at first. Components orthogonal to the global image representation are then extracted from the local information. At last, the orthogonal components are concatenated with the global representation as a complementary, and then aggregation is performed to generate the final representation.
 
-## Prerequisites
+**Prerequisites**: Check [requirements.txt](https://github.com/innat/DOLG-TensorFlow/blob/main/requirements.txt)
 
-Check [requirements.txt](https://github.com/innat/DOLG-TensorFlow/blob/main/requirements.txt)
+## Install 
 
-## Run (Option 1)
+```bash 
+pip install dolg-tensorflow
 
-First, clone it. 
-
-```bash
+or
 git clone https://github.com/innat/DOLG-TensorFlow.git
 ```
 
-Second, create two output branch, one for **local** and other for **global branch**. See the demo below.
+## Usage
+
+**First**, create a model with two output branch, one for **local branch** and other for **global branch**. It's needed for DOLG model. See the demo below.
 
 ```python
-img_size   = 128
-num_classe = 10
-
 base = applications.EfficientNetB0(...)
 new_base = keras.Model(
     [base.inputs], 
@@ -35,7 +33,7 @@ new_base = keras.Model(
 )
 ```
 
-third, pass the new base model to the main model as follows.
+**second**, now use the above created model as follows.
 
 ```python
 from models.DOLG import DOLGNet
@@ -44,15 +42,11 @@ dolg_net = DOLGNet(new_base, num_classes=num_classe, activation='softmax')
 dolg_net.build_graph().summary()
 ```
 
-## Run (Option 2)
-
-Apart from the `keras.applications`, we can also integrate dolg model with our custom layers. Here is one example, 
+Apart from the above approach, we can also integrate dolg layers with our custom model. Here is one example, 
 
 ```python
-
-# general 
+# component of DOLG model
 from layers.GeM import GeneralizedMeanPooling2D
-# special for dolgnet 
 from layers.LocalBranch import DOLGLocalBranch
 from layers.OrtholFusion import OrthogonalFusion
 
@@ -71,7 +65,6 @@ vision = keras.Model(vision_input, vision_output, name="vision")
 vision.summary(expand_nested=True, line_length=110)
 ```
 
-
 ## Code Examples
 
 The **DOLG** concept can be integrated into any computer vision models i.e. `NFNet`, `ResNeSt`, or `EfficietNet`. Here are some end-to-end code examples.
@@ -79,10 +72,6 @@ The **DOLG** concept can be integrated into any computer vision models i.e. `NFN
 - [DenseNet DOLGNet Malaria](https://github.com/innat/DOLG-TensorFlow/blob/main/Code%20Example/DenseNet%20DOLGNet%20Malaria.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1VI7qZQZX_sWZZM8eKN98gCbiY3Ju1NpY?usp=sharing)
 - [EfficientNet DOLGNet Oxford Flowers 102](https://github.com/innat/DOLG-TensorFlow/blob/main/Code%20Example/EfficientNet%20DOLGNet%20Oxford%20Flowers%20102.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1WvxR6gh0SzqcYUnSNnVQRw9UiFzgFMgm?usp=sharing)
 - [ResNet DOLGNet Cmaterdb](https://github.com/innat/DOLG-TensorFlow/blob/main/Code%20Example/ResNet%20DOLGNet%20Cmaterdb.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1uEV9GsEZnTyWoilVww8d_Jmn3cAcefZr?usp=sharing)
-
-## To Do
-- [x] Fix GeM issue. 
-- [ ] Implement Sub-center Arcface Head.
 
 
 ## References and Other Implementation 
