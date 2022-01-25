@@ -7,19 +7,25 @@ This is an unofficial implementation of **Deep Orthogonal Fusion of Local and Gl
 
 It seeks to design an effective single-stage solution by integrating local and global information inside images into compact image representations. It attentively extracts representative local information with multi-atrous convolutions and self-attention at first. Components orthogonal to the global image representation are then extracted from the local information. At last, the orthogonal components are concatenated with the global representation as a complementary, and then aggregation is performed to generate the final representation.
 
-## Prerequisites
+**Prerequisites**: Check [requirements.txt](https://github.com/innat/DOLG-TensorFlow/blob/main/requirements.txt)
 
-Check [requirements.txt](https://github.com/innat/DOLG-TensorFlow/blob/main/requirements.txt)
+## Install
 
-## Run (Option 1)
+1. [Option 1 / 3]: 
 
-First, clone it. 
+```bash 
+pip install dolg-tensorflow
+```
+
+2. [Option 2 / 3]
+
+**First**, clone this repo. 
 
 ```bash
 git clone https://github.com/innat/DOLG-TensorFlow.git
 ```
 
-Second, create two output branch, one for **local** and other for **global branch**. See the demo below.
+**Second**, create two output branch, one for **local** and other for **global branch**. See the demo below.
 
 ```python
 img_size   = 128
@@ -35,7 +41,7 @@ new_base = keras.Model(
 )
 ```
 
-third, pass the new base model to the main model as follows.
+**third**, pass the new base model to the main model as follows.
 
 ```python
 from models.DOLG import DOLGNet
@@ -44,15 +50,12 @@ dolg_net = DOLGNet(new_base, num_classes=num_classe, activation='softmax')
 dolg_net.build_graph().summary()
 ```
 
-## Run (Option 2)
+3. [Option 3 / 3]
 
 Apart from the `keras.applications`, we can also integrate dolg model with our custom layers. Here is one example, 
 
 ```python
-
-# general 
 from layers.GeM import GeneralizedMeanPooling2D
-# special for dolgnet 
 from layers.LocalBranch import DOLGLocalBranch
 from layers.OrtholFusion import OrthogonalFusion
 
