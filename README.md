@@ -9,28 +9,20 @@ It seeks to design an effective single-stage solution by integrating local and g
 
 **Prerequisites**: Check [requirements.txt](https://github.com/innat/DOLG-TensorFlow/blob/main/requirements.txt)
 
-## Install and Usage
-
-[Option 1 / 3]: 
+## Install 
 
 ```bash 
 pip install dolg-tensorflow
-```
 
-[Option 2 / 3]
-
-**First**, clone this repo. 
-
-```bash
+or
 git clone https://github.com/innat/DOLG-TensorFlow.git
 ```
 
-**Second**, create two output branch, one for **local** and other for **global branch**. See the demo below.
+## Usage
+
+**First**, create a model with two output branch, one for **local branch** and other for **global branch**. It's needed for DOLG model. See the demo below.
 
 ```python
-img_size   = 128
-num_classe = 10
-
 base = applications.EfficientNetB0(...)
 new_base = keras.Model(
     [base.inputs], 
@@ -41,7 +33,7 @@ new_base = keras.Model(
 )
 ```
 
-**third**, pass the new base model to the main model as follows.
+**second**, now use the above created model as follows.
 
 ```python
 from models.DOLG import DOLGNet
@@ -50,11 +42,10 @@ dolg_net = DOLGNet(new_base, num_classes=num_classe, activation='softmax')
 dolg_net.build_graph().summary()
 ```
 
-[Option 3 / 3]
-
-Apart from the `keras.applications`, we can also integrate dolg model with our custom layers. Here is one example, 
+Apart from the above approach, we can also integrate dolg layers with our custom model. Here is one example, 
 
 ```python
+# component of DOLG model
 from layers.GeM import GeneralizedMeanPooling2D
 from layers.LocalBranch import DOLGLocalBranch
 from layers.OrtholFusion import OrthogonalFusion
@@ -73,7 +64,6 @@ vision_output = OrthogonalFusion()([y, gem_dens])
 vision = keras.Model(vision_input, vision_output, name="vision")
 vision.summary(expand_nested=True, line_length=110)
 ```
-
 
 ## Code Examples
 
