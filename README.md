@@ -20,6 +20,8 @@ git clone https://github.com/innat/DOLG-TensorFlow.git
 
 ## Usage
 
+[Option 1]
+
 **First**, create a model with two output branch, one for **local branch** and other for **global branch**. It's needed for DOLG model. See the demo below.
 
 ```python
@@ -42,7 +44,9 @@ dolg_net = DOLGNet(new_base, num_classes=num_classe, activation='softmax')
 dolg_net.build_graph().summary()
 ```
 
-Apart from the above approach, we can also integrate dolg layers with our custom model. Here is one example, 
+[Option 2]
+
+Apart from the above approach, we can also integrate dolg layers with a custom model. Here is one example, 
 
 ```python
 # component of DOLG model
