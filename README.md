@@ -3,6 +3,8 @@
 
 # DOLG-TensorFlow
 
+[![Downloads](https://pepy.tech/badge/dolg-tensorflow)](https://pepy.tech/project/dolg-tensorflow)
+
 This is an unofficial implementation of **Deep Orthogonal Fusion of Local and Global Features (DOLG)** in `TensorFlow 2 (Keras)`. [Paper](https://arxiv.org/pdf/2108.02927.pdf). 
 
 It seeks to design an effective single-stage solution by integrating local and global information inside images into compact image representations. It attentively extracts representative local information with multi-atrous convolutions and self-attention at first. Components orthogonal to the global image representation are then extracted from the local information. At last, the orthogonal components are concatenated with the global representation as a complementary, and then aggregation is performed to generate the final representation.
