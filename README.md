@@ -4,6 +4,9 @@
 # DOLG-TensorFlow
 
 [![Downloads](https://pepy.tech/badge/dolg-tensorflow)](https://pepy.tech/project/dolg-tensorflow)
+![Python](https://img.shields.io/badge/python-v3.7.0+-success.svg)
+![Tensorflow](https://img.shields.io/badge/tensorflow-v2.7.0+-success.svg)
+[![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/innat/DOLG-TensorFlow/issues)
 
 This is an unofficial implementation of **Deep Orthogonal Fusion of Local and Global Features (DOLG)** in `TensorFlow 2 (Keras)`. [Paper](https://arxiv.org/pdf/2108.02927.pdf). 
 
